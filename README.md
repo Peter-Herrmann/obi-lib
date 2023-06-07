@@ -7,9 +7,13 @@ Because there are so many useful tools that do not support various features of S
 
 The MUXes connect multiple OBI master devices to a single slave device. These MUXes all support only a single outstanding read transaction, meaning that once a read has been accepted on one device, the MUX does not allow any new requests through until the read has been completed for at least one clock posedge.
 
+The MUXes **do NOT** validate that the masters are requesting an address in the slave device's address range, it is assumed that the request is valid by the time it reaches the MUX. 
+
 # deMUXes
 
-The deMUXes connect a single OBI master device to multiple slave devices. Like the MUXes, they only support a single outstanding read transaction at a time, meaning that once a read has been accepted on one device, the deMUX does not allow any new requests through until the read has been completed for at least one clock posedge.
+The deMUXes connect a single OBI master device to multiple slave devices. Like the MUXes, they only support a single outstanding read transaction at a time, meaning that once a read has been accepted on one device, the deMUX does not allow any new requests through until the read has been completed for at least one clock posedge. 
+
+The deMUXes also set a `illegal_access_o` flag if the master is attempting to request a transaction from a memory address that does not correspond to any of the ports.
 
 # Adapters
 
