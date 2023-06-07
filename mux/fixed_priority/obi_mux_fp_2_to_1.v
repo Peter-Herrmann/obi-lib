@@ -1,7 +1,7 @@
 `timescale 1ns/1ps
-//////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 //
-// Module Name: obi_mux_2_to_1
+// Module Name: obi_mux_fp_2_to_1
 // Author: Peter Herrmann
 //
 // Description: A 2-to-1 OBI (Open Bus Interface) mux
@@ -9,16 +9,17 @@
 //              The MUX accepts at most 1 outstanding transaction at a time, so
 //              Multiple reads can not be performed concurrently.
 //
-//              The MUX has 2 masters connected to a single slave. The primary
-//              Master gets priority over the secondary master, meaning if the 
-//              primary master and the secondary master are in the address phase,
-//              only the primary can advance to the response phase of a read 
-//              transaction or close a write transaction.
+//              The MUX has 2 masters connected to a single slave with fixed 
+//              priority. The primary master gets priority over the secondary 
+//              master, meaning if the primary master and the secondary master 
+//              are in the address phase, only the primary can advance to the 
+//              response phase of a read transaction or close a write 
+//              transaction.
 // 
-//////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 
-module obi_mux_2_to_1 (
+module obi_mux_fp_2_to_1 (
         input               clk_i,
         input               rst_ni,
 

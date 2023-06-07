@@ -7,7 +7,7 @@ YOSYS = yosys
 YOSYS_FLAGS = -p "synth -flatten; write_verilog"
 
 DIRECTORIES = mux demux wishbone
-VERILOG_SOURCES = $(foreach dir,$(DIRECTORIES),$(wildcard $(dir)/*.v))
+VERILOG_SOURCES = $(shell find $(DIRECTORIES) -name '*.v')
 
 # Define colors
 RED = \033[1;31m
@@ -15,7 +15,7 @@ GREEN = \033[1;32m
 BLUE = \033[1;34m
 NC = \033[0m # No Color
 
-.PHONY: all lint synth always
+.PHONY: all lint synth always 
 
 all: lint synth finish
 
@@ -40,5 +40,5 @@ results/synth/%.synth.log: % always
 
 always: ;
 
-finish:
+finish: always
 	@echo ""

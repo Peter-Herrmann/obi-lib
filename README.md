@@ -1,7 +1,7 @@
 # obi-lib
 This repository is a collection of designs I have created and tested in complete systems using the RI5CY subset of the OBI (Open Bus Interface) memory bus. The standard is maintained by the OpenHW group, and its full definition can be found [here](https://github.com/openhwgroup/obi). 
 
-Because there are so many useful tools that do not support various features of SystemVerilog, the devices have been written in a basic subset of verilog and work with even the most restrictive open source tools. 
+Because there are so many useful tools that do not support various features of SystemVerilog, the devices have been written in a basic subset of verilog and work with even the most restrictive open source tools. There is an included makefile to verify the compatibility of all modules against some popular open source tools.
 ## OBI Subset Pins
 I have opted for the minimal "RI5CY" implementation in all of the designs in this repository. The pins used in the interface are described briefly here. To get the full definition, these pins adhere to the specification set for thin the [OBI spec](https://github.com/openhwgroup/obi).
 
@@ -19,6 +19,8 @@ I have opted for the minimal "RI5CY" implementation in all of the designs in thi
 # MUXes
 
 The MUXes connect multiple OBI master devices to a single slave device. These MUXes all support only a single outstanding read transaction, meaning that once a read has been accepted on one device, the MUX does not allow any new requests through until the read has been completed for at least one clock posedge.
+
+The MUXes currently used fixed priority arbitration. This results in starvation of the lower priority masters if the higher priority master is in use. For some designs this is desireable, such as an instruction and data port on a single issue, pipelined CPU when yielding the data port to the instruction port might cause a deadlock. In situations like a multicore CPU, however, this is not a good solution.
 
 The MUXes **do NOT** validate that the masters are requesting an address in the slave device's address range, it is assumed that the request is valid by the time it reaches the MUX. 
 

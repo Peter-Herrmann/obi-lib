@@ -1,5 +1,5 @@
 `timescale 1ns/1ps
-//////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 //
 // Module Name: wb_to_obi
 // Author: Peter Herrmann
@@ -13,9 +13,10 @@
 //              Note that the wishbone clock input is missing. For this
 //              connection to work, the wishbone bus must be operating in the
 //              clock domain as the OBI device, so only a single clock input is
-//              provided. Any clock domain crossings must be handled by the user.
+//              provided. Any clock domain crossings must be handled by the 
+//              user.
 //
-//////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 module wb_to_obi (
     input               clk_i,
