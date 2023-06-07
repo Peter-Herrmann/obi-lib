@@ -1,7 +1,7 @@
 # obi-lib
 This repository is a collection of designs I have created and tested in complete systems using the RI5CY subset of the OBI (Open Bus Interface) memory bus. The standard is maintained by the OpenHW group, and its full definition can be found [here](https://github.com/openhwgroup/obi). I have opted for the minimal "RI5CY" implementation in all of the designs in this repository.
 
-Because there are so many useful tools that do not support various features of SystemVerilog, the devices have been written in verilog and work with even the most restrictive open source tools.
+Because there are so many useful tools that do not support various features of SystemVerilog, the devices have been written in a basic subset of verilog and work with even the most restrictive open source tools. 
 
 # MUXes
 
