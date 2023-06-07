@@ -43,7 +43,7 @@ module obi_demux_1_to_2 #(
     input        [31:0] port1_rdata_i,
 
     // Port 2 (Slave) OBI interface
-    output wire         port2_req_o,
+    output reg          port2_req_o,
     input               port2_gnt_i,
     output wire  [31:0] port2_addr_o,
     output wire         port2_we_o,

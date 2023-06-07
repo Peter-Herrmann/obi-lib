@@ -89,7 +89,7 @@ module obi_demux_1_to_5 #(
     input               port5_rvalid_i,
     input        [31:0] port5_rdata_i,
 
-    output reg          illegal_access_o
+    output wire         illegal_access_o
 );
 
     // Address and Response routing mux selections (0 = no route selected!)
