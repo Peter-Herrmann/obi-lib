@@ -1,7 +1,20 @@
 # obi-lib
-This repository is a collection of designs I have created and tested in complete systems using the RI5CY subset of the OBI (Open Bus Interface) memory bus. The standard is maintained by the OpenHW group, and its full definition can be found [here](https://github.com/openhwgroup/obi). I have opted for the minimal "RI5CY" implementation in all of the designs in this repository.
+This repository is a collection of designs I have created and tested in complete systems using the RI5CY subset of the OBI (Open Bus Interface) memory bus. The standard is maintained by the OpenHW group, and its full definition can be found [here](https://github.com/openhwgroup/obi). 
 
 Because there are so many useful tools that do not support various features of SystemVerilog, the devices have been written in a basic subset of verilog and work with even the most restrictive open source tools. 
+## OBI Subset Pins
+I have opted for the minimal "RI5CY" implementation in all of the designs in this repository. The pins used in the interface are described briefly here. To get the full definition, these pins adhere to the specification set for thin the [OBI spec](https://github.com/openhwgroup/obi).
+
+| Pin Name  | Pin Count | Direction               | Description                                                    |
+|-----------|:---------:|-------------------------|----------------------------------------------------------------|
+| req     | 1  | Controller -> Peripheral    | Asserted by the master to request a memory transaction. The master is responsible to keep all address signals valid while req is high. |
+| gnt     | 1  | Peripheral -> Controller    | Asserted by the Peripheral when new transactions can be accepted. A transaction is accepted on the rising edge of the clock if req and gnt are both high.   |
+| addr    | 32 | Controller -> Peripheral    | Address output from the master |
+| we      | 1  | Controller -> Peripheral    | Asserted by the master on writes. de-asserted for reads |
+| be      | 4  | Controller -> Peripheral    | Byte enable output (strobe), to specify which bytes towrite to |
+| wdata   | 32 | Controller -> Peripheral    | Write data output from the controller to be written to memory |
+| rvalid  | 1  | Peripheral -> Controller    | Asserted by the memory system to signal valid read data. The read response is completed on the first rising clock edge when rvalid is asserted. rdata must be valid as long as rvalid is high. |
+| rdata   | 32 | Peripheral -> Controller    | Read data input to the controller from the memory system |
 
 # MUXes
 
