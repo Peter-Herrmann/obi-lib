@@ -50,9 +50,7 @@ module obi_mux_2_to_1 (
         output wire  [3:0]  shr_be_o,
         output wire  [31:0] shr_wdata_o,
         input               shr_rvalid_i,
-        input        [31:0] shr_rdata_i,
-
-        output wire         bad_state_o
+        input        [31:0] shr_rdata_i
 );
 
   ///////////////////////////
@@ -101,7 +99,5 @@ module obi_mux_2_to_1 (
         sec_read_outstanding <= sec_accepted;
     end
   end
-
-  assign bad_state_o = (pri_read_outstanding && sec_read_outstanding);
 
 endmodule // obi_mux_2_to_1

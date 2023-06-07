@@ -52,7 +52,7 @@ module obi_demux_1_to_2 #(
     input               port2_rvalid_i,
     input        [31:0] port2_rdata_i,
 
-    output wire         bad_state_o
+    output wire         illegal_access_o
 );
 
 
@@ -137,6 +137,6 @@ module obi_demux_1_to_2 #(
         endcase
     end
 
-    assign bad_state_o = (addr_sel == 0) && ctrl_req_i;
+    assign illegal_access_o = (addr_sel == 0) && ctrl_req_i;
 
 endmodule

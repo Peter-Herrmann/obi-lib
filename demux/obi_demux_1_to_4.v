@@ -76,7 +76,7 @@ module obi_demux_1_to_4 #(
     input               port4_rvalid_i,
     input        [31:0] port4_rdata_i,
 
-    output reg          bad_state_o
+    output reg          illegal_access_o
 );
 
     // Address and Response routing mux selections (0 = no route selected!)
@@ -184,6 +184,6 @@ module obi_demux_1_to_4 #(
         endcase
     end
 
-    assign bad_state_o = (addr_sel == 0) && ctrl_req_i;
+    assign illegal_access_o = (addr_sel == 0) && ctrl_req_i;
 
 endmodule
