@@ -3,7 +3,7 @@ This repository is a collection of designs I have created and tested in complete
 
 Because there are so many useful tools that do not support various features of SystemVerilog, the devices have been written in a basic subset of verilog and work with even the most restrictive open source tools. There is an included makefile to verify the compatibility of all modules against some popular open source tools.
 ## OBI Subset Pins
-I have opted for the minimal "RI5CY" implementation in all of the designs in this repository. The pins used in the interface are described briefly here. To get the full definition, these pins adhere to the specification set for thin the [OBI spec](https://github.com/openhwgroup/obi).
+I have opted for the minimal "RI5CY" implementation in all of the designs in this repository. The pins used in the interface are described briefly here. To get the full definition, these pins adhere to the specification set forth in the [OBI spec](https://github.com/openhwgroup/obi).
 
 | Pin Name  | Pin Count | Direction               | Description                                                    |
 |-----------|:---------:|-------------------------|----------------------------------------------------------------|
