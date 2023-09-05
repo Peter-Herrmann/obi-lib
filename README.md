@@ -1,4 +1,7 @@
 # obi-lib
+
+![CI](https://github.com/Peter-Herrmann/obi-lib/actions/workflows/ci.yml/badge.svg)
+
 This repository is a collection of designs I have created and tested in complete systems using the RI5CY subset of the OBI (Open Bus Interface) memory bus. The standard is maintained by the OpenHW group, and its full definition can be found [here](https://github.com/openhwgroup/obi). 
 
 Because there are so many useful tools that do not support various features of SystemVerilog, the devices have been written in a basic subset of verilog and work with even the most restrictive open source tools. There is an included makefile to verify the compatibility of all modules against some popular open source tools.

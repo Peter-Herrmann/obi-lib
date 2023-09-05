@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: sudo apt-get update && sudo apt-get install -y wget tar
+
+    - name: Download and Install oss-cad-suite
+      run: |
+        wget https://github.com/YosysHQ/oss-cad-suite-build/releases/download/<release_tag>/oss-cad-suite-linux-x64-20230905.tgz
+        tar -xzvf oss-cad-suite-linux-x64-20230905.tgz
+        echo "oss_cad_suite_dir=$(pwd)/oss-cad-suite" >> $GITHUB_ENV
+
+    - name: Source environment and Run Make
+      run: |
+        source ${{ env.oss_cad_suite_dir }}/environment
+        make
