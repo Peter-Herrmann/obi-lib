@@ -50,12 +50,12 @@ module wb_to_obi (
     // Read transaction tracker
     always @(posedge clk_i) begin
         if (wb_rst_i)
-            read_outstanding <= '0;
+            read_outstanding <= 'b0;
         else begin
             if (read_outstanding && (rvalid_i && !read_accepted_a))
-                read_outstanding <= '0;
+                read_outstanding <= 'b0;
             if (!read_outstanding && read_accepted_a)
-                read_outstanding <= '0;
+                read_outstanding <= 'b0;
         end
     end
         
