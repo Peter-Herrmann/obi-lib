@@ -4,8 +4,6 @@
 // Module Name: wb_to_obi
 // Author: Peter Herrmann
 //
-// Author: Peter Herrmann
-//
 // Description: This Wishbone B4 to OBI (Open Bus Interface) accepts a
 //              connection from a Wishbone master device, and drives an OBI
 //              slave device.
