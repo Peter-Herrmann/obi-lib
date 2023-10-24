@@ -6,7 +6,7 @@ VERILATOR_FLAGS = --language 1364-2005 --lint-only -Wall
 YOSYS = yosys
 YOSYS_FLAGS = -p "synth -flatten; write_verilog"
 
-DIRECTORIES = mux demux wishbone
+DIRECTORIES = mux demux wishbone cdc
 VERILOG_SOURCES = $(shell find $(DIRECTORIES) -name '*.v')
 
 # Define colors
