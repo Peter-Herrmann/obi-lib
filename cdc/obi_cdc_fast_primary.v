@@ -26,6 +26,22 @@ module obi_cdc_fast_primary (
     
     reg req_ff1, rvalid_ff1, gnt_ff1, gnt_ff2, gnt_ff3;
 
+    /////////////////////////
+    // Transaction Tracker //
+    /////////////////////////
+
+    /* This module must account for the latency between a transaction being
+       acccepted by the secondary bus and the primary bus receiving a grant.
+       To avoid duplicate transactions, secondary_req_o must be blocked for
+       the round trip time for a grant to return to the controller (3 fast clk)
+       and for the updated req signal to propagate (2 slow clk)  */
+
+    // ...
+
+    ///////////////////////////
+    // Secondary bus outputs //
+    ///////////////////////////
+
     assign secondary_addr_o  = ctrl_addr_i;
     assign secondary_we_o    = ctrl_we_i;
     assign secondary_be_o    = ctrl_be_i;
@@ -35,6 +51,10 @@ module obi_cdc_fast_primary (
         secondary_req_o <= req_ff1;
         req_ff1 <= ctrl_req_i;
     end
+
+    /////////////////////////
+    // Primary bus outputs //
+    /////////////////////////
 
     assign ctrl_rdata_o = secondary_rdata_i;
     assign ctrl_gnt_o = gnt_ff3 && !gnt_ff2;
