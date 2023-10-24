@@ -4,13 +4,13 @@ module obi_cdc_fast_primary (
     // Controller (Primary) OBI interface
     input               ctrl_clk_i,
     input               ctrl_req_i,
-    output reg          ctrl_gnt_o,
+    output wire         ctrl_gnt_o,
     input        [31:0] ctrl_addr_i,
     input               ctrl_we_i,
     input        [3:0]  ctrl_be_i,
     input        [31:0] ctrl_wdata_i,
     output reg          ctrl_rvalid_o,
-    output reg   [31:0] ctrl_rdata_o,
+    output wire  [31:0] ctrl_rdata_o,
 
     // Peripheral (Secondary) OBI interface
     input               secondary_clk_i,
