@@ -21,10 +21,10 @@ module obi_cdc_fast_primary (
     output wire  [3:0]  secondary_be_o,
     output wire  [31:0] secondary_wdata_o,
     input               secondary_rvalid_i,
-    input        [31:0] secondary_rdata_i,
+    input        [31:0] secondary_rdata_i
 );
     
-    logic req_ff1, rvalid_ff1, gnt_ff1, gnt_ff2, gnt_ff3;
+    reg req_ff1, rvalid_ff1, gnt_ff1, gnt_ff2, gnt_ff3;
 
     assign secondary_addr_o  = ctrl_addr_i;
     assign secondary_we_o    = ctrl_we_i;
