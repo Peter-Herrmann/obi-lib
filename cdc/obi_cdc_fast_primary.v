@@ -54,7 +54,7 @@ module obi_cdc_fast_primary (
        acccepted by the secondary bus and the primary bus receiving a grant. */
 
     /* verilator lint_off SYNCASYNCNET */
-    /* Verilator warning here is intended to protect agains mixing sync and
+    /* The above warning is intended to protect agains mixing sync and
        async reset signals, as a coding style. gnt_in_flight is not used in
        this way, so the warning is inappropriate. */
 
