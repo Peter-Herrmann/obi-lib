@@ -1,4 +1,4 @@
-`timescale 1ns/1ps
+`timescale 1ns / 1ps
 ///////////////////////////////////////////////////////////////////////////////
 //
 // Module Name: wb_to_obi
@@ -14,11 +14,14 @@
 //              provided. Any clock domain crossings must be handled by the 
 //              user.
 //
+// SPDX-License-Identifier: Apache-2.0
+//
 ///////////////////////////////////////////////////////////////////////////////
+
 
 module wb_to_obi (
     input               clk_i,
-    // Wishbone bus from master
+    // WishBone Master Ports
     input               wb_rst_i,  // Active high!
     input               wbs_stb_i,
     input               wbs_cyc_i, // Not Used in OBI
@@ -29,18 +32,18 @@ module wb_to_obi (
     output wire         wbs_ack_o,
     output wire  [31:0] wbs_dat_o,
 
-    // OBI Port to Slave
-    output wire         req_o,    
-    input               gnt_i,   
-    output wire  [31:0] addr_o,    
-    output wire         we_o,       
-    output wire  [3:0]  be_o,     
-    output wire  [31:0] wdata_o,  
-    input               rvalid_i,
-    input [31:0]        rdata_i   
+    // OBI Slave Ports
+    output wire         req_o,   
+    input               gnt_i,    
+    output wire  [31:0] addr_o,   
+    output wire         we_o,      
+    output wire  [3:0]  be_o,    
+    output wire  [31:0] wdata_o, 
+    input               rvalid_i, 
+    input [31:0]        rdata_i  
     );
 
-    reg read_outstanding, write_completed; 
+    reg read_outstanding, write_completed;
     wire read_accepted_a, write_accepted_a;
     assign read_accepted_a  = (req_o && gnt_i) && !wbs_we_i;
     assign write_accepted_a = (req_o && gnt_i) && wbs_we_i;
@@ -53,7 +56,7 @@ module wb_to_obi (
             if (read_outstanding && (rvalid_i && !read_accepted_a))
                 read_outstanding <= 'b0;
             if (!read_outstanding && read_accepted_a)
-                read_outstanding <= 'b0;
+                read_outstanding <= 'b1;
         end
     end
         
@@ -63,7 +66,7 @@ module wb_to_obi (
     end
 
     // Address Signals
-    assign req_o     = wbs_stb_i;
+    assign req_o     = wbs_stb_i && !read_outstanding;
     assign addr_o    = wbs_adr_i;
     assign we_o      = wbs_we_i;
     assign be_o      = wbs_sel_i;
