@@ -43,7 +43,8 @@ module wb_to_obi (
     input [31:0]        rdata_i  
     );
 
-    logic read_outstanding, write_completed, read_accepted_a, write_accepted_a;
+    reg read_outstanding, write_completed;
+    wire read_accepted_a, write_accepted_a;
     assign read_accepted_a  = (req_o && gnt_i) && !wbs_we_i;
     assign write_accepted_a = (req_o && gnt_i) && wbs_we_i;
 
