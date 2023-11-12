@@ -25,8 +25,8 @@ module obi_cdc_fast_primary (
     input               ctrl_we_i,
     input        [3:0]  ctrl_be_i,
     input        [31:0] ctrl_wdata_i,
-    output reg          ctrl_rvalid_o,
-    output wire  [31:0] ctrl_rdata_o,
+    output wire         ctrl_rvalid_o,
+    output reg   [31:0] ctrl_rdata_o,
 
     // Peripheral (Secondary) OBI interface
     input               secondary_clk_i,
@@ -42,11 +42,14 @@ module obi_cdc_fast_primary (
     
     reg gnt_in_flight,
         req_ff1, req_ff2,
-        rvalid_ff1, 
+        rvalid_buff, rvalid_ff1, rvalid_ff2, rvalid_ff3,
         gnt_ack, gnt_ack_ff1, gnt_ack_ff2, gnt_ack_ff3,
         gnt_ff1, gnt_ff2, gnt_ff3,
         rst_n_ctrl_ff1, rst_n_ctrl_ff2,
-        rst_n_secondary_ff1, rst_n_secondary_ff2;
+        rst_n_secondary_ff1, rst_n_secondary_ff2,
+        rdata_captured;
+
+    reg [31:0] rdata_buff;
 
     /////////////////////////
     // Transaction Tracker //
@@ -115,13 +118,13 @@ module obi_cdc_fast_primary (
     /////////////////////////
 
     assign ctrl_gnt_o = gnt_ff2 && !gnt_ff3;
+    assign ctrl_rvalid_o = rvalid_ff3;
 
-    always @(posedge ctrl_rvalid_o) begin
-        if (!rst_n_ctrl_ff2) begin
-            ctrl_rdata_o <= 32'hDEAD_BEEF;
-        end else begin
-            ctrl_rdata_o <= secondary_rdata_i;
+    always @(posedge secondary_clk_i) begin
+        if (secondary_rvalid_i) begin
+            rdata_buff <= secondary_rdata_i;
         end
+        rvalid_buff <= secondary_rvalid_i;
     end
 
     always @(posedge ctrl_clk_i) begin
@@ -129,14 +132,17 @@ module obi_cdc_fast_primary (
             gnt_ff3       <= 'b0;
             gnt_ff2       <= 'b0;
             gnt_ff1       <= 'b0;
-            ctrl_rvalid_o <= 'b0;
             rvalid_ff1    <= 'b0;
+            ctrl_rdata_o  <= 'b0;
         end else begin
             gnt_ff3       <= gnt_ff2;
             gnt_ff2       <= gnt_ff1;
             gnt_ff1       <= gnt_in_flight;
-            ctrl_rvalid_o <= rvalid_ff1;
-            rvalid_ff1    <= secondary_rvalid_i;
+            rvalid_ff3    <= rvalid_ff2;
+            rvalid_ff2    <= rvalid_ff1;
+            rvalid_ff1    <= rvalid_buff;
+            if (rvalid_ff2 && !rvalid_ff3)
+                ctrl_rdata_o <= rdata_buff;
         end
     end
 
