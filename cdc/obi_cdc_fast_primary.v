@@ -46,8 +46,7 @@ module obi_cdc_fast_primary (
         gnt_ack, gnt_ack_ff1, gnt_ack_ff2, gnt_ack_ff3,
         gnt_ff1, gnt_ff2, gnt_ff3,
         rst_n_ctrl_ff1, rst_n_ctrl_ff2,
-        rst_n_secondary_ff1, rst_n_secondary_ff2,
-        rdata_captured;
+        rst_n_secondary_ff1, rst_n_secondary_ff2;
 
     reg [31:0] rdata_buff;
 
